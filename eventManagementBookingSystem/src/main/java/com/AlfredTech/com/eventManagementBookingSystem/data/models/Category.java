@@ -1,6 +1,6 @@
 package com.AlfredTech.com.eventManagementBookingSystem.data.models;
 
-public enum Categories {
+public enum Category {
     CONCERT, CONFERENCE, GAME
 
 }

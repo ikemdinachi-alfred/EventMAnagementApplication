@@ -25,9 +25,11 @@ public class Event {
     private String location;
     private LocalDate eventDate;
     @Column(length = 1000)
+    @Size(min = 1, max = 1000)
     private Integer attendees ;
-    @Enumerated
-    private Categories category;
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "event_category")
+    private Category categories;
 
 
 }
