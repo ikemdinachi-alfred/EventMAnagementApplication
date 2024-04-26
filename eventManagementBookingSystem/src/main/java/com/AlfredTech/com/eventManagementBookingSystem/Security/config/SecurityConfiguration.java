@@ -1,4 +1,4 @@
-package com.AlfredTech.com.eventManagementBookingSystem.Security;
+package com.AlfredTech.com.eventManagementBookingSystem.Security.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

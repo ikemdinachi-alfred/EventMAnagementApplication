@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequiredArgsConstructor
@@ -61,8 +62,10 @@ public class AppAuthenticationFilter extends OncePerRequestFilter {
 
            Map<String,String>authresponse = new HashMap<>();
            authresponse.put("access_token", accessToken);
+           response.setStatus((OK.value()));
            response.setContentType(APPLICATION_JSON_VALUE);
            response.getOutputStream().write(mapper.writeValueAsBytes(authresponse));
+
        }
        filterChain.doFilter(request, response);
 
