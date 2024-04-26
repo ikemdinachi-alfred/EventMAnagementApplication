@@ -22,6 +22,6 @@ public class EventBooking {
     @Column(name = "phone_number")
     private String phoneNumber;
     @Size(min = 1, max = 1000)
-    private Integer reservationId;
+    private Long reservationId;
 
 }
