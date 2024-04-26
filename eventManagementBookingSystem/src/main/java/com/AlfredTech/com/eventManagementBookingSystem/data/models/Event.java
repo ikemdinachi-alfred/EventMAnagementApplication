@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
+
 @Setter
 @Getter
 @Entity
@@ -24,6 +26,8 @@ public class Event {
     private String description;
     private String location;
     private LocalDate eventDate;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<EventBooking> bookings;
     @Column(length = 1000)
     @Size(min = 1, max = 1000)
     private Integer attendees ;

@@ -25,7 +25,8 @@ public class User  implements UserDetails, UserPrincipal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
+    private String firstName;
+    private String lastName;
     @Size(min = 4)
     @NotNull
     private String password;
@@ -33,14 +34,14 @@ public class User  implements UserDetails, UserPrincipal {
     @Email
     @Column(unique = true)
     private String email;
-    private boolean accountLocked;
-    private boolean accountEnabled;
+    private boolean isLocked;
+    private boolean isEnabled;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Event> events;
 
     @Override
     public String getName() {
-        return "";
+        return email;
     }
 
     @Override
@@ -49,22 +50,27 @@ public class User  implements UserDetails, UserPrincipal {
     }
 
     @Override
+    public String getUsername() {
+        return "";
+    }
+
+    @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return !isLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return isEnabled;
     }
 }
