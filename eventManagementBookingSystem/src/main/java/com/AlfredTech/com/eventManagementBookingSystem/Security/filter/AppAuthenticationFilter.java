@@ -1,5 +1,7 @@
 package com.AlfredTech.com.eventManagementBookingSystem.Security.filter;
 import com.AlfredTech.com.eventManagementBookingSystem.dtos.requests.AuthLoginRequest;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -14,6 +16,13 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Instant;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RequiredArgsConstructor
 public class AppAuthenticationFilter extends OncePerRequestFilter {
     private final AuthenticationManager authenticationManager;
@@ -42,7 +51,21 @@ public class AppAuthenticationFilter extends OncePerRequestFilter {
        boolean isAuthenticationSuccessful = authenticationResult.isAuthenticated();
        if (isAuthenticationSuccessful) {
            SecurityContextHolder.getContext().setAuthentication(authenticationResult);
+        // opaque
+           String accessToken = JWT.create()
+                   .withIssuer("Alfred_Tech Event Management System")
+                   .withSubject("Access Token")
+                   .withClaim("Email:"+authLoginRequest.getEmail(),new Date())
+                   .withExpiresAt(Instant.now().plusSeconds(86400*7))
+                   .sign(Algorithm.HMAC256("This is our very secret key"));
+
+           Map<String,String>authresponse = new HashMap<>();
+           authresponse.put("access_token", accessToken);
+           response.setContentType(APPLICATION_JSON_VALUE);
+           response.getOutputStream().write(mapper.writeValueAsBytes(authresponse));
        }
+       filterChain.doFilter(request, response);
+
 
     }
 }
