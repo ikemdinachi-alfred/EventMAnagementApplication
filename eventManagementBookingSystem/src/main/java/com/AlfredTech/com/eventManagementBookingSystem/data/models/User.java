@@ -26,14 +26,11 @@ public class User  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String email;
     private String firstName;
     private String lastName;
     @Size(min = 4)
-    @NotNull
     private String password;
-    @NaturalId(mutable = true)
-    private String email;
-    private boolean isLocked;
     private boolean isEnabled;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Event> events;

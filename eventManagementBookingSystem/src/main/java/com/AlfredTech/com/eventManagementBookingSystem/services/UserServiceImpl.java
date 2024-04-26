@@ -1,5 +1,6 @@
 package com.AlfredTech.com.eventManagementBookingSystem.services;
 
+import com.AlfredTech.com.eventManagementBookingSystem.Security.user.Users;
 import com.AlfredTech.com.eventManagementBookingSystem.data.models.User;
 import com.AlfredTech.com.eventManagementBookingSystem.data.repositories.UserRepository;
 import com.AlfredTech.com.eventManagementBookingSystem.dtos.requests.LoginRequest;
@@ -76,6 +77,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+      User user = userRepository.findUserByEmail(username)
+              .orElseThrow(() -> new UsernameNotFoundException
+                      (username + " not found"));
+        return new Users(user);
     }
 }
